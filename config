@@ -1,8 +1,8 @@
 servers = (
 
   {
-    address = "irc.dynastynet.net";
-    chatnet = "dynasty";
+    address = "irc.server.net";
+    chatnet = "SERVERNAME";
     port = "6667";
     use_tls = "no";
     tls_verify = "no";
@@ -11,15 +11,15 @@ servers = (
 );
 
 chatnets = {
-  dynasty = {
+  SERVERNAME = {
     type = "IRC";
-    nick = "boofar[foo]";
-    realname = "foo bar";
+    nick = "USER_NICK";
+    realname = "USER_REAL";
   }
 };
 
 channels = (
-  { name = "foo"; chatnet = "dynasty"; autojoin = "yes"; }
+  { name = "CHATROOM_NAME"; chatnet = "SERVERNAME"; autojoin = "yes"; }
 );
 
 aliases = {
