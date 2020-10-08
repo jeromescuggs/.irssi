@@ -1,3 +1,5 @@
+![jrmirc](./irssi.jpg)
+
 # .irssi
 
 a quick bootstrap to get running with irssi. aimed at use with one server mainly. 
