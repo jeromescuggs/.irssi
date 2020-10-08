@@ -4,6 +4,13 @@
 
 a quick bootstrap to get running with irssi. aimed at use with one server mainly. 
 
+### features
+
+- config configurator: irssi is somewhat perplexing to newer users. this takes some of the guesswork out of it by automating the creation of a sane default config, with your information inserted and ready to go. 
+- tweaked theme: something of a derivative of the popular 'weed' theme sans bloat, and the 'industrial' theme. 
+- goodies: figlet generator, dau/dau mode, pangotext included, so you can get right to being banned for spamming/flooding! :)
+- quality-of-life goodies: tweaked statusbar will display cpu load. user names are color-coded. 
+
 ## UPDATE Oct 2020
 
 i have replaced the `config` file, which had to be manually edited, with
