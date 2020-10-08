@@ -1,9 +1,53 @@
+#!/bin/bash
+# JRM_OUT=$HOME/.irssi/config
+JRM_OUT=$HOME/.irssi/config
+ 
+echo "jeromatic irssi configuration creator v0.4.20"
+sleep 1s
+echo "this will create a config file for irssi, with your username and a server, setup and ready to go."
+sleep 1s
+echo "=====[SERVER CONFIG]====="
+echo "enter the server you would like to configure"
+echo "no quotes or prefixes. example: irc.myserver.com"
+read JRM_SRV_URL
+echo "setting up server..."
+
+sleep 1s
+echo "done."
+sleep 1s
+echo "enter a friendly name to call this server."
+echo "example: myserver"
+read JRM_SRV_NAME
+sleep 1s
+echo "what port would you like to connect through?"
+echo "leave blank for default port 6667"
+read JRM_SRV_PORT
+sleep 1s
+echo "configuring server friendly name and port..."
+sleep 1s
+echo "Enter preferred username:"
+read JRM_IRC_NAME
+sleep 1s
+echo "Enter preferred realname:"
+read JRM_REAL_NAME
+sleep 1s
+echo "Enter the chat room you would like to automatically join upon connecting to the server."
+echo "do not use the [#]hashtag. example: My_room"
+read JRM_IRC_ROOM
+sleep 1s
+echo "configuring..."
+
+if [[ -z $JRM_SRV_PORT ]]; then
+    JRM_SRV_PORT=6667
+fi 
+
+cat <<EOF >$JRM_OUT
 servers = (
 
   {
-    address = "irc.server.net";
-    chatnet = "SERVERNAME";
-    port = "6667";
+    address = "$JRM_SRV_URL";
+    chatnet = "$JRM_SRV_NAME";
+    port = "$JRM_SRV_PORT";
     use_tls = "no";
     tls_verify = "no";
     autoconnect = "yes";
@@ -11,17 +55,34 @@ servers = (
 );
 
 chatnets = {
-  SERVERNAME = {
-    type = "IRC";
-    nick = "USER_NICK";
-    realname = "USER_REAL";
-  }
+  $JRM_SRV_NAME = { type = "IRC"; nick = "$JRM_IRC_NAME"; realname = "$JRM_REAL_NAME"; };
 };
 
-channels = (
-  { name = "CHATROOM_NAME"; chatnet = "SERVERNAME"; autojoin = "yes"; }
-);
+channels = ( { name = "$JRM_IRC_ROOM"; chatnet = "$JRM_SRV_NAME"; autojoin = "yes"; } );
 
+settings = {
+  core = {
+    real_name = "$JRM_REAL_NAME";
+    user_name = "$USER";
+    nick = "$JRM_IRC_NAME";
+  };
+  "fe-text" = { actlist_sort = "refnum"; colors_ansi_24bit = "yes"; };
+  "fe-common/core" = { theme = "default"; };
+  "perl/core/scripts" = {
+    theme_autocolor = "yes";
+    dau_statusbar_daumode_hide_when_off = "no";
+    neat_colorize = "yes";
+    dau_daumode_channels = "$JRM_IRC_ROOM";
+  };
+};
+
+
+EOF
+
+sleep 1s
+echo "filling in remaining config options with sane defaults..."
+
+cat >> $JRM_OUT <<'EOF' 
 aliases = {
   ATAG = "WINDOW SERVER";
   ADDALLCHANS = "SCRIPT EXEC foreach my \\$channel (Irssi::channels()) { Irssi::command(\"CHANNEL ADD -auto \\$channel->{name} \\$channel->{server}->{tag} \\$channel->{key}\")\\;}";
@@ -125,6 +186,8 @@ statusbar = {
         act = { priority = "10"; };
         more = { priority = "-1"; alignment = "right"; };
         barend = { priority = "100"; alignment = "right"; };
+        loadavg = { };
+        daumode = { };
       };
     };
 
@@ -174,7 +237,18 @@ statusbar = {
     };
   };
 };
-settings = {
-  core = { real_name = ""; user_name = "jerome"; nick = "jerome"; };
-  "fe-text" = { actlist_sort = "refnum"; };
-};
+keyboard = (
+  { key = "meta-[M"; id = "command"; data = "mouse_xterm "; }
+);
+
+EOF
+
+
+echo "done..."
+sleep 1s
+echo "you may now run irssi. upon starting you will be taken to the main server window."
+echo "to switch to your auto-joined chat room, press [Alt+2]". 
+sleep 1s
+exit 
+ 
+

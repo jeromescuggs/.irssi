@@ -2,16 +2,29 @@
 
 a quick bootstrap to get running with irssi. aimed at use with one server mainly. 
 
+## UPDATE Oct 2020
+
+i have replaced the `config` file, which had to be manually edited, with
+a script that you can run to automatically generate a config by answering a few
+simple questions!
+
+the config generator is geared towards a one-server setup, with one main
+chatroom. adding either more rooms to auto-join, or more servers, will require
+manually editing the config file generated here. 
+
+**WARNING** re-running the config generator will erase and create a new config
+file!
+
 ## install 
 
 if you have an irssi setup, either delete it or back it up: 
 
 ```
-cd ~ && rm -rf .irssi 
+cd ~ && mv .irssi .old-irssi
 ```
 
 ```
-cd ~ && mv .irssi .old-irssi
+cd ~ && rm -rf .irssi 
 ```
 
 clone this repo to your home directory, or wherever `irssi` looks for the config:
@@ -21,17 +34,30 @@ cd ~
 git clone https://github.com/jeromescuggs/.irssi 
 ```
 
-almost there! now you'll want to configure the `.irssi/config` file with your info. the important stuff is at the top, here you define the network name, server address, your nickname, and the channel you'd like to automatically enter after (automatically) connecting to the server when you start `irssi`.
+navigate to the newly cloned directory, and run `create-config.sh`. you will be
+asked for some parameters: server URL, a friendly name for the server, the
+server port (default 6667), username, realname, and a chatroom to auto-join upon
+connecting to a server (which will be auto-connected upon running irssi)
 
-when setting the channel to autojoin, you can omit the '#' e.g. entering `foobar` will be equal to having typed `/join #foobar`.
+```
+cd $HOME/.irssi
+./create-config.sh
+```
+
+### config example
+
+the following is the template used to create the first section of the config,
+and is the primary section that the config generator will fill in with
+information. though the $VARIABLES have different names in the script, this is
+a rough idea of what it will be configuring during setup.
 
 ```
 servers = (
 
   {
-    address = "irc.server.net";
-    chatnet = "SERVERNAME";
-    port = "6667";
+    address = "$SERVER_URL";
+    chatnet = "$SERVER_NAME";
+    port = "$SERVER_PORT";
     use_tls = "no";
     tls_verify = "no";
     autoconnect = "yes";
@@ -39,14 +65,14 @@ servers = (
 );
 
 chatnets = {
-  SERVERNAME = {
+  $SERVER_NAME = {
     type = "IRC";
-    nick = "USER_NICK";
-    realname = "USER_REAL";
+    nick = "$USER_NICK";
+    realname = "$USER_REAL";
   }
 };
 
 channels = (
-  { name = "CHATROOM_NAME"; chatnet = "SERVERNAME"; autojoin = "yes"; }
+  { name = "$CHATROOM_NAME"; chatnet = "$SERVER_NAME"; autojoin = "yes"; }
 );
 ```
