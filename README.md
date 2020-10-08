@@ -1,4 +1,4 @@
-![jrmirc](./irssi.jpg)
+![jrmirc](./irssi.png)
 
 # .irssi
 
