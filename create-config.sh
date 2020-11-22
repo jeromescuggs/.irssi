@@ -67,7 +67,11 @@ settings = {
     nick = "$JRM_IRC_NAME";
   };
   "fe-text" = { actlist_sort = "refnum"; colors_ansi_24bit = "yes"; };
-  "fe-common/core" = { theme = "default"; };
+  "fe-common/core" = { 
+    theme = "default";
+    use_status_window = "yes";
+    window_auto_change = "yes";
+  };
   "perl/core/scripts" = {
     theme_autocolor = "yes";
     dau_statusbar_daumode_hide_when_off = "no";
