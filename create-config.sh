@@ -74,7 +74,7 @@ settings = {
   };
   "perl/core/scripts" = {
     theme_autocolor = "yes";
-    dau_statusbar_daumode_hide_when_off = "no";
+    dau_statusbar_daumode_hide_when_off = "yes";
     neat_colorize = "yes";
     dau_daumode_channels = "$JRM_IRC_ROOM";
   };
