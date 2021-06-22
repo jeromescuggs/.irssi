@@ -51,6 +51,8 @@ servers = (
     use_tls = "no";
     tls_verify = "no";
     autoconnect = "yes";
+  }
+);
 EOF
 
 echo "Setup auto-login? (Y/n)"
@@ -66,25 +68,22 @@ if [ "$JRM_NICK_YN" != "${JRM_NICK_YN#[Yy]}" ] ;then
       sleep 2s
 
       cat <<EOF >>$JRM_OUT
-    autosendcmd = "/^msg nickserv identify $JRM_IRC_NAME $JRM_NICK_PW; wait 2000";
-  }
-);
+chatnets = {
+  $JRM_SRV_NAME = { type = "IRC"; nick = "$JRM_IRC_NAME"; realname = "$JRM_REAL_NAME"; autosendcmd = "/^msg nickserv identify $JRM_IRC_NAME $JRM_NICK_PW; wait 2000"; };
+};
 EOF
 
     else
       echo "Skipping botserv auto commands..."
       cat <<EOF >>$JRM_OUT
-  }
-);
+ chatnets = {
+  $JRM_SRV_NAME = { type = "IRC"; nick = "$JRM_IRC_NAME"; realname = "$JRM_REAL_NAME"; };
+};  
 EOF
       sleep 1s
 fi
 
 cat <<EOF >>$JRM_OUT
-
-chatnets = {
-  $JRM_SRV_NAME = { type = "IRC"; nick = "$JRM_IRC_NAME"; realname = "$JRM_REAL_NAME"; };
-};
 
 channels = ( { name = "$JRM_IRC_ROOM"; chatnet = "$JRM_SRV_NAME"; autojoin = "yes"; } );
 

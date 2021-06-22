@@ -1,10 +1,11 @@
 jerome[foo]:%c
-Centurion[m3n]:%R
-Centurion{m3n}:%Y
-jerome[opi]:%g
-Metroid:%y
-Centurion[mobile]:%G
 jerome[atomic]:%C
-ph[nig]:%c
 jerome[f1o]:%m
+jerome_:%Y
+Metroid:%y
 jerome:%b
+ph[nig]:%c
+jerome[opi]:%g
+Centurion[mobile]:%G
+Centurion{m3n}:%Y
+Centurion[m3n]:%R
