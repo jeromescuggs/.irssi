@@ -51,8 +51,36 @@ servers = (
     use_tls = "no";
     tls_verify = "no";
     autoconnect = "yes";
+EOF
+
+echo "Setup auto-login? (Y/n)"
+read JRM_NICK_YN
+if [ "$JRM_NICK_YN" != "${JRM_NICK_YN#[Yy]}" ] ;then
+      echo "Adding a generic autocmd to the config."
+      sleep 1s
+      echo "Enter the password to send to NickServ."
+      read JRM_NICK_PW
+      sleep 1s
+      echo "Final format: /msg nickserv identify USERNAME PASSWORD"
+      echo "You may need to tweak this in the raw config." 
+      sleep 2s
+
+      cat <<EOF >>$JRM_OUT
+    autosendcmd = "/^msg nickserv identify $JRM_IRC_NAME $JRM_NICK_PW; wait 2000";
   }
 );
+EOF
+
+    else
+      echo "Skipping botserv auto commands..."
+      cat <<EOF >>$JRM_OUT
+  }
+);
+EOF
+      sleep 1s
+fi
+
+cat <<EOF >>$JRM_OUT
 
 chatnets = {
   $JRM_SRV_NAME = { type = "IRC"; nick = "$JRM_IRC_NAME"; realname = "$JRM_REAL_NAME"; };
