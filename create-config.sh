@@ -55,7 +55,7 @@ servers = (
 );
 EOF
 
-echo "Setup auto-login? (Y/n)"
+echo "Setup auto-login (with e.g. NickServ)? (Y/n)"
 read JRM_NICK_YN
 if [ "$JRM_NICK_YN" != "${JRM_NICK_YN#[Yy]}" ] ;then
       echo "Adding a generic autocmd to the config."
